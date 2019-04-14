@@ -1,0 +1,45 @@
+#PATH env is not really necessary
+version: "3"
+services:
+  elasticsearch:
+    image: "docker.elastic.co/elasticsearch/elasticsearch:6.6.2"
+    container_name: "elasticsearch"
+    hostname: elasticsearch
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - CLUSTER_NAME = elasticsearch
+      - ELASTIC_CONTAINER=true
+      - JAVA_HOME=/opt/jdk-11.0.1
+  logstash:
+    image: "docker.elastic.co/logstash/logstash:6.6.2" 
+    container_name: "logstash"
+    hostname: logstash
+    links: 
+      - elasticsearch
+    ports:
+      - "5044:5044"
+      - "9600:9600"
+    environment:
+      - ELASTIC_CONTAINER=true
+  kibana:
+    image: "docker.elastic.co/kibana/kibana:6.6.2" 
+    container_name: "kibana"
+    hostname: kibana
+    links: 
+      - elasticsearch
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTIC_CONTAINER=true
+  filebeat:
+    image: "docker.elastic.co/beats/filebeat:6.6.2" 
+    container_name: "filebeat"
+    hostname: filebeat
+    links: 
+      - elasticsearch
+      - logstash 
+      - kibana
+    environment:
+      - ELASTIC_CONTAINER=true
