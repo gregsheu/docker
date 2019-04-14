@@ -1,0 +1,28 @@
+- hosts: local
+  become: root
+  become_method: sudo
+  gather_facts: no
+  connection: local
+  tasks:
+    - name: apt-get -y update
+      raw: apt-get -y update && apt-get -y install python
+    - name: install python-pip cron
+      apt: 
+        name: ["python-pip", "cron"]
+    - name: pip install gps3
+      pip: 
+        name: gps3
+    - name: copy gpsd.py
+      copy: 
+        src: files/gpsd.py
+        dest: /root/gpsd.py
+    - name: copy start.sh
+      copy: 
+        src: files/start.sh
+        dest: /usr/local/bin/start.sh
+    - name: creates gps3_job in /etc/cron.d
+      cron:
+        name: run gps3
+        user: root
+        job: "/usr/bin/python /root/gpsd.py > /proc/1/fd/1 2>/proc/1/fd/2"
+        cron_file: gps3_job

@@ -1,0 +1,52 @@
+- hosts: local
+  become: root
+  become_method: sudo
+  gather_facts: no
+  connection: docker
+  handlers:
+    - name: apt-get-update
+      command: apt-get update
+      args: 
+        warn: no
+
+  tasks:
+    - name: load varialbes
+      include_vars: file=rs_docker_packer_vars.yml
+
+    - name: run apt-get update
+      raw: apt-get update 
+
+    - name: install python gnupg 
+      raw: apt-get -y install python gnupg
+
+    - name: add an apt signing key, uses whichever key is at the url
+      apt_key:
+        url: https://openresty.org/package/pubkey.gpg
+        state: present
+        validate_certs: no
+
+    - name: add openresty repo
+      apt_repository:
+        repo: deb http://openresty.org/package/ubuntu bionic main
+        state: present
+      notify: apt-get-update
+
+    - name: flush handlers
+      meta: flush_handlers
+
+    - name: install openresty
+      apt: 
+        name: ["openresty"]
+
+    - template:
+        src: templates/nginx.conf.j2
+        dest: /usr/local/openresty/nginx/conf/nginx.conf
+        mode: 0644
+
+        #    - name: copy runme script
+        #      copy:
+        #        src: templates/runme.sh
+        #        dest: /usr/local/bin/runme.sh
+        #        owner: root
+        #        group: root
+        #        mode: 0655

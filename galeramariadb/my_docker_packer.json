@@ -1,0 +1,40 @@
+{
+    "variables": {
+        "ansible_host": "local",
+        "ansible_user": "root",
+        "ansible_connection": "docker"
+    },
+    "builders": [
+        {
+            "type": "docker",
+            "image": "centos:latest",
+            "privileged": true,
+            "commit": true,
+            "run_command": ["-d", "-i", "-t", "--name", "{{user `ansible_host`}}", "{{.Image}}", "/sbin/init" ],
+            "changes": [
+                "EXPOSE 3306",
+                "ENTRYPOINT [\"/usr/sbin/mysqld\"]"
+            ]
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "ansible",
+            "groups": ["local"],
+            "playbook_file": "my_docker_packer.yml",
+            "extra_arguments": [
+                 "--extra-vars",
+                 "ansible_user={{user `ansible_user`}} ansible_host={{user `ansible_host`}} ansible_connection={{user `ansible_connection`}}"
+            ]
+        }
+    ],
+    "post-processors": [
+        [
+            {
+                "type": "docker-tag",
+                "repository": "local",
+                "tag": "galeramariasystemd"
+            }
+        ]
+    ]
+}

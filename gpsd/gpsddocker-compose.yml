@@ -1,0 +1,18 @@
+version: "3"
+services:
+  gpsd:
+    image: "local:gpsddocker"
+    container_name: "gpsd"
+    devices: 
+      ["/dev/ttyACM0"]
+    #docker run -d --device=/dev/ttyACM0 -p 2947:2947 local:gpsddocker -n -G -N /dev/ttyACM0
+    entrypoint:
+      ["/usr/sbin/gpsd", "-n", "-G", "-N", "/dev/ttyACM0"]
+    ports:
+      - "2947:2947"
+  gps3:
+    image: "local:gps3docker" 
+    container_name: "gps3"
+    links: ["gpsd"]
+    environment:
+      - GPSD_HOST=gpsd

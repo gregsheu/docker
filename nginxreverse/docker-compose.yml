@@ -1,0 +1,24 @@
+version: "3"
+services:
+  apache:
+    image: "local:myapache"
+    container_name: "apache"
+    environment:
+      - PHPHOST=phpfpm
+    ports:
+      - "8000:80"
+    volumes:
+      - docker_vol:/var/www/html
+  nginxreverse:
+    image: "local:mynginxreverse" 
+    container_name: "nginxreverse"
+    environment:
+      - HOST_NAME=nginx
+      - APACHE_HOST=apache
+    links: ["apache"]
+    ports:
+      - "8080:80"
+    volumes:
+      - docker_vol:/var/www/html
+volumes:
+  docker_vol: {}

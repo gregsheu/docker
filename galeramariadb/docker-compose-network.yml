@@ -1,0 +1,39 @@
+version: '3'
+services:
+  galera1:
+    image: "local:galeramariasystemd"
+    container_name: "galera1"
+    networks:
+      staticnet:
+        ipv4_address: 172.20.0.2
+    entrypoint: ["/usr/sbin/mysqld", "--wsrep-cluster-address=gcomm://", "--wsrep-node-name=galera1", "--wsrep-node-address=172.20.0.2"]
+    ports:
+      - "3307:3306"
+
+  galera2:
+    image: "local:galeramariasystemd"
+    container_name: "galera2"
+    networks:
+      staticnet:
+        ipv4_address: 172.20.0.3
+    entrypoint: ["/usr/sbin/mysqld", "--wsrep-cluster-address=gcomm://172.20.0.2", "--wsrep-node-name=galera2", "--wsrep-node-address=172.20.0.3"]
+    links: ["galera1"]
+    ports:
+      - "3308:3306"
+  galera3:
+    image: "local:galeramariasystemd"
+    container_name: "galera3"
+    networks:
+      staticnet:
+        ipv4_address: 172.20.0.4
+    entrypoint: ["/usr/sbin/mysqld", "--wsrep-cluster-address=gcomm://172.20.0.2",  "--wsrep-node-name=galera3", "--wsrep-node-address=172.20.0.4"]
+    links: ["galera1"]
+    ports:
+      - "3309:3306"
+networks:
+  staticnet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/24

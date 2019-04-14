@@ -1,0 +1,230 @@
+[
+    {
+        "Id": "cd001b57165346d43bcf31a450ce83f7d6d666d8e89bee0aa6540d9a785d3a82",
+        "Created": "2019-02-02T05:04:40.211461177Z",
+        "Path": "/usr/sbin/mysqld",
+        "Args": [
+            "--wsrep-cluster-address=gcomm://172.20.0.2",
+            "--wsrep-node-name=galera4",
+            "--wsrep-node-address=172.20.1.2"
+        ],
+        "State": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 1,
+            "Error": "",
+            "StartedAt": "2019-02-02T05:04:44.416821636Z",
+            "FinishedAt": "2019-02-02T05:05:18.579161059Z"
+        },
+        "Image": "sha256:9887849632c9ac139398f4a5fa76ccc0f3a5963cbf18cb1e7d4e50e9c38e8777",
+        "ResolvConfPath": "/var/lib/docker/containers/cd001b57165346d43bcf31a450ce83f7d6d666d8e89bee0aa6540d9a785d3a82/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/cd001b57165346d43bcf31a450ce83f7d6d666d8e89bee0aa6540d9a785d3a82/hostname",
+        "HostsPath": "/var/lib/docker/containers/cd001b57165346d43bcf31a450ce83f7d6d666d8e89bee0aa6540d9a785d3a82/hosts",
+        "LogPath": "/var/lib/docker/containers/cd001b57165346d43bcf31a450ce83f7d6d666d8e89bee0aa6540d9a785d3a82/cd001b57165346d43bcf31a450ce83f7d6d666d8e89bee0aa6540d9a785d3a82-json.log",
+        "Name": "/galera4",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "docker-default",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": [],
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "galeramariadb_staticnet2",
+            "PortBindings": {
+                "3306/tcp": [
+                    {
+                        "HostIp": "",
+                        "HostPort": "3310"
+                    }
+                ]
+            },
+            "RestartPolicy": {
+                "Name": "",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": [],
+            "CapAdd": null,
+            "CapDrop": null,
+            "Dns": null,
+            "DnsOptions": null,
+            "DnsSearch": null,
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "shareable",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": null,
+            "DeviceCgroupRules": null,
+            "DiskQuota": 0,
+            "KernelMemory": 0,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": 0,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/asound",
+                "/proc/acpi",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/0c24bebdbae6f314c1f2f1f9f3fa299ea4f44fcf415d33bd9e1f46e11226b548-init/diff:/var/lib/docker/overlay2/32ee6781452037738c6781501d16bd62a69d00628588f637334056a78483c92d/diff:/var/lib/docker/overlay2/188262f93dde8b9b2b0b3c3a4e48306c2224539b036e97178529b04f4f0a4efc/diff",
+                "MergedDir": "/var/lib/docker/overlay2/0c24bebdbae6f314c1f2f1f9f3fa299ea4f44fcf415d33bd9e1f46e11226b548/merged",
+                "UpperDir": "/var/lib/docker/overlay2/0c24bebdbae6f314c1f2f1f9f3fa299ea4f44fcf415d33bd9e1f46e11226b548/diff",
+                "WorkDir": "/var/lib/docker/overlay2/0c24bebdbae6f314c1f2f1f9f3fa299ea4f44fcf415d33bd9e1f46e11226b548/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [],
+        "Config": {
+            "Hostname": "cd001b571653",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "3306/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": null,
+            "Image": "local:galeramariasystemd",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": [
+                "/usr/sbin/mysqld",
+                "--wsrep-cluster-address=gcomm://172.20.0.2",
+                "--wsrep-node-name=galera4",
+                "--wsrep-node-address=172.20.1.2"
+            ],
+            "OnBuild": null,
+            "Labels": {
+                "com.docker.compose.config-hash": "07056c52a879bee63d162134a98eeb8eb37261d076a1eba12265f0d3bc7d651f",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "galeramariadb",
+                "com.docker.compose.service": "galera4",
+                "com.docker.compose.version": "1.23.2",
+                "org.label-schema.build-date": "20181205",
+                "org.label-schema.license": "GPLv2",
+                "org.label-schema.name": "CentOS Base Image",
+                "org.label-schema.schema-version": "1.0",
+                "org.label-schema.vendor": "CentOS"
+            }
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "2fce5d30e3bea3342c898b942495f740b42a3047d5d845727bf7bd4f46a4de54",
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "Ports": {},
+            "SandboxKey": "/var/run/docker/netns/2fce5d30e3be",
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "",
+            "Gateway": "",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "",
+            "IPPrefixLen": 0,
+            "IPv6Gateway": "",
+            "MacAddress": "",
+            "Networks": {
+                "galeramariadb_staticnet2": {
+                    "IPAMConfig": {
+                        "IPv4Address": "172.20.1.2"
+                    },
+                    "Links": [
+                        "galera1:galera1"
+                    ],
+                    "Aliases": [
+                        "cd001b571653",
+                        "galera4"
+                    ],
+                    "NetworkID": "3156ae5dc193aeb2ffd32d0868b9588fbc20cf7c9e214fea342223308c6a45a1",
+                    "EndpointID": "",
+                    "Gateway": "",
+                    "IPAddress": "",
+                    "IPPrefixLen": 0,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "",
+                    "DriverOpts": null
+                }
+            }
+        }
+    }
+]

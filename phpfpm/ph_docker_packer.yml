@@ -1,0 +1,26 @@
+- hosts: local
+  become: root
+  become_method: sudo
+  gather_facts: no
+  connection: local
+  handlers:
+    - name: yum-clean-metadata
+      command: yum clean metadata 
+      args: 
+        warn: no
+  tasks:
+    - name: install php-fpm
+      yum: 
+        name: ["php", "php-mysql", "php-fpm", "openssl-devel"]
+    - copy:
+        src: templates/php-fpm.conf
+        dest: /etc/php-fpm.conf
+        owner: root
+        group: root
+        mode: 0644
+    - copy:
+        src: templates/www.conf
+        dest: /etc/php-fpm.d/www.conf
+        owner: root
+        group: root
+        mode: 0644

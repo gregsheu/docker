@@ -1,0 +1,33 @@
+- hosts: local
+  become: root
+  become_method: sudo
+  gather_facts: no
+  connection: local
+  handlers:
+    - name: yum-clean-metadata
+      command: yum clean metadata 
+      args: 
+        warn: no
+
+  tasks:
+    - name: load varialbes
+      include_vars: file=rs_docker_packer_vars.yml
+
+    - name: add openresty repo
+      yum_repository: name=openresty description="openresty web" baseurl={{ openresty_repo }} gpgkey={{ openresty_key }} gpgcheck=yes enabled=yes
+      notify: yum-clean-metadata
+
+    - name: install openresty pcre-devel openssl-devel gcc curl
+      yum: 
+        name: ["openresty", "pcre-devel", "openssl-devel", "gcc", "curl"]
+    - template:
+        src: templates/nginx.conf.j2
+        dest: /usr/local/openresty/nginx/conf/nginx.conf
+        mode: 0644
+        #    - name: copy runme script
+        #      copy:
+        #        src: templates/runme.sh
+        #        dest: /usr/local/bin/runme.sh
+        #        owner: root
+        #        group: root
+        #        mode: 0655

@@ -1,0 +1,38 @@
+- hosts: local
+  become: root
+  become_method: sudo
+  gather_facts: no
+  connection: local
+  handlers:
+    - name: yum-clean-metadata
+      command: yum clean metadata 
+      args: 
+        warn: no
+    - name: restart-nginx
+      service: name=nginx state=reloaded
+
+  tasks:
+    - name: load varialbes
+      include_vars: file=ng_docker_packer_vars.yml
+
+    - name: add nginx repo
+      yum_repository: name=nginx description="nginx web" baseurl={{ nginx_repo }} gpgcheck=no enabled=yes
+      notify: yum-clean-metadata
+
+    - name: install nginx nginx-module-perl
+      yum: 
+        name: ["nginx", "nginx-module-perl"]
+    - template:
+        src: templates/default.conf.j2
+        dest: /etc/nginx/conf.d/default.conf
+        owner: nginx
+        group: nginx
+        mode: 0644
+    - copy:
+        src: templates/nginx.conf
+        dest: /etc/nginx/nginx.conf
+        owner: nginx
+        group: nginx
+        mode: 0644
+    - name: create tmp cache
+      file: path=/tmp/nginx/cache state=directory mode=0755 owner=nginx group=nginx

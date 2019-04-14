@@ -1,0 +1,2 @@
+mariadb_repo: "http://yum.mariadb.org/5.5.63/centos74-amd64"
+mariadb_repo_gpgkey: "http://yum.mariadb.org/RPM-GPG-KEY-MariaDB"

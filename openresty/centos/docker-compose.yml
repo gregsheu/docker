@@ -1,0 +1,40 @@
+version: "3"
+services:
+  phpfpm:
+    image: "local:myphpfpm"
+    container_name: "phpfpm"
+    ports:
+      - "9001:9000"
+    volumes:
+      - docker_vol:/usr/share/openresty/html
+  openresty:
+    image: "local:myopenresty" 
+    container_name: "openresty"
+    links: ["phpfpm"]
+    environment:
+      - HOST_NAME=openresty
+      - PROXY_HOST=phpfpm
+    ports:
+      - "81:80"
+    volumes:
+      - docker_vol:/usr/share/openresty/html
+  phpfpm2:
+    image: "local:myphpfpm"
+    container_name: "phpfpm2"
+    ports:
+      - "9002:9000"
+    volumes:
+      - docker_vol:/usr/share/openresty/html
+  openresty2:
+    image: "local:myopenresty" 
+    container_name: "openresty2"
+    links: ["phpfpm2"]
+    environment:
+      - HOST_NAME=openresty2
+      - PROXY_HOST=phpfpm2
+    ports:
+      - "82:80"
+    volumes:
+      - docker_vol:/usr/share/openresty/html
+volumes:
+  docker_vol: {}

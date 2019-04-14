@@ -1,0 +1,39 @@
+{
+    "variables": {
+        "ansible_host": "gpsd",
+        "ansible_user": "root",
+        "ansible_connection": "docker"
+    },
+    "builders": [
+        {
+            "type": "docker",
+            "image": "raspbian/stretch:latest",
+            "commit": true,
+            "run_command": ["-d", "-i", "-t", "--name", "{{user `ansible_host`}}", "{{.Image}}"],
+            "changes": [
+                "EXPOSE 2947",
+                "ENTRYPOINT [\"/usr/sbin/gpsd\"]"
+            ]
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "ansible",
+            "groups": ["local"],
+            "playbook_file": "gp_docker_packer.yml",
+            "extra_arguments": [
+                 "--extra-vars",
+                 "ansible_user={{user `ansible_user`}} ansible_host={{user `ansible_host`}} ansible_connection={{user `ansible_connection`}}"
+            ]
+        }
+    ],
+    "post-processors": [
+        [
+            {
+                "type": "docker-tag",
+                "repository": "local",
+                "tag": "pi3gpsdubuntu"
+            }
+        ]
+    ]
+}

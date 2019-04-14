@@ -1,0 +1,35 @@
+- hosts: local
+  become: root
+  become_method: sudo
+  gather_facts: no
+  connection: local
+  handlers:
+    - name: yum-clean-metadata
+      command: yum clean metadata 
+      args: 
+        warn: no
+    - name: restart-apache
+      service: name=apache state=reloaded
+
+  tasks:
+    - name: install apache
+      yum: 
+        name: ["httpd", "pcre-devel", "openssl-devel", "gcc", "curl"]
+    - template:
+        src: templates/httpd.conf.j2
+        dest: /etc/httpd/conf/httpd.conf
+        owner: apache
+        group: apache
+        mode: 0644
+    - template:
+        src: templates/virtualhost.conf.j2
+        dest: /etc/httpd/conf.d/virtualhost.conf
+        owner: apache
+        group: apache
+        mode: 0644
+    - template:
+        src: templates/phpfpm.conf.j2
+        dest: /etc/httpd/conf.d/phpfpm.conf
+        owner: apache
+        group: apache
+        mode: 0644

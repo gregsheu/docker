@@ -1,0 +1,23 @@
+version: '3'
+services:
+  galera1:
+    image: "local:galeramariasystemd"
+    container_name: "galera1"
+    entrypoint: ["/usr/sbin/mysqld", "--wsrep-cluster-address=gcomm://", "--wsrep-node-name=galera1", "--wsrep-node-address=galera1"]
+    ports:
+      - "3307:3306"
+
+  galera2:
+    image: "local:galeramariasystemd"
+    container_name: "galera2"
+    entrypoint: ["/usr/sbin/mysqld", "--wsrep-cluster-address=gcomm://galera1", "--wsrep-node-name=galera2", "--wsrep-node-address=galera2"]
+    links: ["galera1"]
+    ports:
+      - "3308:3306"
+  galera3:
+    image: "local:galeramariasystemd"
+    container_name: "galera3"
+    entrypoint: ["/usr/sbin/mysqld", "--wsrep-cluster-address=gcomm://galera1",  "--wsrep-node-name=galera3", "--wsrep-node-address=galera3"]
+    links: ["galera1"]
+    ports:
+      - "3309:3306"

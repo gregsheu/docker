@@ -1,0 +1,9 @@
+FROM ubuntu:18.04
+RUN apt-get -y update
+RUN apt-get -y install python python-pip cron
+RUN pip install gps3
+ADD gpsd.py /root/.
+ADD gps3_job /etc/cron.d/.
+ADD start.sh /usr/local/bin/.
+RUN chmod 0644 /etc/cron.d/gps3_job
+CMD ["sh", "/usr/local/bin/start.sh"]

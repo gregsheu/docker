@@ -1,0 +1,7 @@
+FROM ubuntu:18.04
+RUN apt-get -y update
+RUN apt-get -y install gpsd
+RUN sed -i "s/\(START_DAEMON=\)\"true\"/\1\"false\"/g" /etc/default/gpsd
+RUN sed -i "s/\(USBAUTO=\)\"true\"/\1\"false\"/g" /etc/default/gpsd
+EXPOSE 2947
+ENTRYPOINT ["/usr/sbin/gpsd"]

@@ -1,0 +1,30 @@
+- hosts: local
+  become: root
+  become_method: sudo
+  gather_facts: yes 
+  connection: local
+  handlers:
+    - name: yum-clean-metadata
+      command: yum clean metadata 
+      args: 
+        warn: no
+
+  tasks:
+    - name: load varialbes
+      include_vars: file=my_docker_packer_vars.yml
+    - name: add mariadb repo
+      yum_repository: 
+        name=mariadb description="mariadb repo" baseurl={{ mariadb_repo }} gpgkey={{ mariadb_repo_gpgkey }} gpgcheck=yes enabled=yes
+      notify: yum-clean-metadata
+    - name: install dependencies 
+      yum: 
+        name: ["which", "rsync", "MariaDB-client", "MariaDB-Galera-server", "galera"]
+    - name: create mariadb log directory
+      file: path=/var/log/mysql state=directory group=mysql owner=mysql
+      #- name: create mariadb log file
+      #file: path=/var/log/mysql/mysqld.log state=touch group=mysql owner=mysql
+    - name: start mariadb
+      systemd: name=mysql state=started enabled=yes
+    - template: 
+        src: templates/my.cnf.j2
+        dest: /etc/my.cnf

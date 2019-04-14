@@ -1,0 +1,21 @@
+- hosts: local
+  become: root
+  become_method: sudo
+  gather_facts: no
+  connection: gpsd
+  tasks:
+    - name: apt-get -y update
+      raw: apt-get -y update && apt-get -y install python
+    - name: install gpsd
+      apt: 
+        name: ["gpsd"]
+    - lineinfile:
+        path: /etc/default/gpsd
+        state: present
+        regexp: '^START_DAEMON'
+        line: 'START_DAEMON="false"'
+    - lineinfile:
+        path: /etc/default/gpsd
+        state: present
+        regexp: '^USBAUTO'
+        line: 'USBAUTO="false"'

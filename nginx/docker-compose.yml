@@ -1,0 +1,41 @@
+version: "3"
+services:
+  phpfpm:
+    image: "local:myphpfpm"
+    container_name: "phpfpm"
+    ports:
+      - "9001:9000"
+    volumes:
+      - docker_vol:/usr/share/nginx/html
+  nginx:
+    image: "local:mynginx" 
+    container_name: "nginx"
+    links: 
+      - phpfpm
+    environment:
+      - HOST_NAME=nginx
+      - PROXY_HOST=phpfpm
+    ports:
+      - "81:80"
+    volumes:
+      - docker_vol:/usr/share/nginx/html
+  phpfpm2:
+    image: "local:myphpfpm"
+    container_name: "phpfpm2"
+    ports:
+      - "9002:9000"
+    volumes:
+      - docker_vol:/usr/share/nginx/html
+  nginx2:
+    image: "local:mynginx" 
+    container_name: "nginx2"
+    links: ["phpfpm2"]
+    environment:
+      - HOST_NAME=nginx2
+      - PROXY_HOST=phpfpm2
+    ports:
+      - "82:80"
+    volumes:
+      - docker_vol:/usr/share/nginx/html
+volumes:
+  docker_vol: {}
